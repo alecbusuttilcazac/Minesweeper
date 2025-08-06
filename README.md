@@ -1,2 +1,2 @@
 # Minesweeper
-My minesweeper game, programmed in Java/
+My minesweeper game, programmed in Java.
