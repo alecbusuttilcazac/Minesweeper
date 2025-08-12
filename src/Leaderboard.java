@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class Leaderboard{
+class Leaderboard{
     static String filePath = (System.getProperty("user.dir"))+"\\data\\leaderboard.dat";
     static File file = new File(filePath);
     

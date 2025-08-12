@@ -1,16 +1,16 @@
 import java.awt.*;
 import javax.swing.ImageIcon;
 
-public class EmptyTile extends Tile{
-    int bombsAroundTile;
-    EmptyTile(String exploredChar, int bombsAroundTile){
+class EmptyTile extends Tile{
+    protected int bombsAroundTile;
+    protected EmptyTile(String exploredChar, int bombsAroundTile){
         super(exploredChar);
         this.bombsAroundTile = bombsAroundTile;
     }
     
-    int getBombsAroundTile()    { return bombsAroundTile; }
+    protected int getBombsAroundTile()    { return bombsAroundTile; }
     
-    void setExplored(Player player, Color colour){
+    protected void setExplored(Player player, Color colour){
         // tile can not be unexplored
         if(!isExplored){
             isExplored = true;
@@ -22,7 +22,7 @@ public class EmptyTile extends Tile{
         }
     }
     
-    void toggleFlagged(Player player, String flagChar){
+    protected void toggleFlagged(Player player, String flagChar){
         //tile can be flagged / unflagged
         if(isFlagged){
             isFlagged = false;

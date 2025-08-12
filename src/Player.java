@@ -1,4 +1,4 @@
-public class Player{
+class Player{
     int score = 0;
     String nickname;
 

@@ -4,12 +4,11 @@ import javax.swing.*;
 import java.awt.event.*;
 
 // Actual minesweeper game class
-public class Minesweeper{
-    Minesweeper(){
-        int x = 15, y = 15; // Default size
-        boolean exit = false; // Exit flag
+class Minesweeper{
+    Minesweeper(int x, int y, int numBombs){
+        final int numExplored[] = {0}; // number of tiles explored (use array for mutability in inner class)
         
-        Map map = new Map(x, y, 40); // Create a new map with default size and number of bombs
+        Map map = new Map(x, y, numBombs); // Create a new map with default size and number of bombs
         Player player = new Player();
         
         JFrame gameFrame = new JFrame();
@@ -54,10 +53,24 @@ public class Minesweeper{
                 .getButton()
                 .addMouseListener(new MouseAdapter(){ // Add listeners for left and right clicks on the button
                     public void mousePressed(MouseEvent e){
-                        
                         if (e.getButton() == MouseEvent.BUTTON1){ // left click
                             if (map.getTile(i2, j2) instanceof BombTile) {
+                                System.out.println("Bomb clicked at ("+i2+", "+j2+")");
+                                
                                 gameFrame.dispose(); // Close the game window
+                            }else{
+                                System.out.println("> Cluster("+i2+", "+j2+", map, player)");
+                                int clusterSize = Cluster(i2, j2, map, player);
+                                numExplored[0] += clusterSize;
+                                minesweeperPanel.repaint();
+                                
+                                System.out.println("  | returned cluster size = " +clusterSize);
+                                System.out.println("  | number of explored tiles = " +numExplored[0]);
+                                
+                                if (x*y - numExplored[0] - numBombs == 0) {
+                                    System.out.println("All non-bomb tiles explored! You win!");
+                                    gameFrame.dispose(); // Close the game window
+                                }
                             }
                         }
                         
@@ -67,11 +80,9 @@ public class Minesweeper{
                         
                         if (e.getButton() == MouseEvent.BUTTON3){ // right click
                             if(!(map.getTile(i2, j2).getExplored())){ // tile cannot be flagged if it has been explored
-                                if(lightDark) map.getTile(i2, j2).toggleFlagged(player, Settings.getFlagChar()); //light grey
-                                else map.getTile(i2, j2).toggleFlagged(player, Settings.getFlagChar()); //grey
-                                
+                                map.getTile(i2, j2).toggleFlagged(player, Settings.getFlagChar());
+                                System.out.println("> map.getTile("+i2+", "+j2+").toggleFlagged(player, flagChar)");
                                 minesweeperPanel.repaint();
-                                minesweeperPanel.revalidate();
                             }
                         }
                     }
@@ -105,23 +116,32 @@ public class Minesweeper{
         
     }
     
-    public void Cluster(int x, int y, Map map, Player player){
+    int Cluster(int x, int y, Map map, Player player){
+        int numExplored = 0;
         if (!(map.getTile(x, y) instanceof BombTile) && !(map.getTile(x, y).getExplored())){
+            
             if(map.getTile(x, y).getLightDark()) map.getTile(x, y).setExplored(player, new Color(209, 209, 209));
             else map.getTile(x, y).setExplored(player, new Color(170, 170, 170));
             
             if(map.getTile(x, y).getBombsAroundTile() == 0){
-                if(x > 0) Cluster(x-1, y, map, player);
-                if(x < map.sizeX-1) Cluster(x+1, y, map, player);
-                if(y > 0) Cluster(x, y-1, map, player);
-                if(y < map.sizeY-1) Cluster(x, y+1, map, player);
+                if(x > 0) numExplored += Cluster(x-1, y, map, player);
+                if(x < map.sizeX-1) numExplored += Cluster(x+1, y, map, player);
+                if(y > 0) numExplored += Cluster(x, y-1, map, player);
+                if(y < map.sizeY-1) numExplored += Cluster(x, y+1, map, player);
                 
-                if(x > 0 && y > 0) Cluster(x-1, y-1, map, player);
-                if(x < map.sizeX-1 && y < map.sizeY-1) Cluster(x+1, y+1, map, player);
-                if(x > 0 && y < map.sizeY-1) Cluster(x-1, y+1, map, player);
-                if(x < map.sizeX-1 && y > 0) Cluster(x+1, y-1, map, player);
+                if(x > 0 && y > 0) numExplored += Cluster(x-1, y-1, map, player);
+                if(x < map.sizeX-1 && y < map.sizeY-1) numExplored += Cluster(x+1, y+1, map, player);
+                if(x > 0 && y < map.sizeY-1) numExplored += Cluster(x-1, y+1, map, player);
+                if(x < map.sizeX-1 && y > 0) numExplored += Cluster(x+1, y-1, map, player);
             }
+            return numExplored + 1; // return the number of tiles explored in this cluster
         }
+        return numExplored;
+    }
+    
+    boolean isGameOver(Map map){
+        
+        return true;
     }
     
     
@@ -136,7 +156,7 @@ public class Minesweeper{
     //     se.Frame(f, "Difficulty Selection");
     //     se.Panel(f, p, Color.black, new GridLayout(4, 1));
     //     se.Label(p, l, "Choose the difficulty", Color.white, 30, true);
-    //     se.Button(p, b1, "EASY (10x10)", Color.black, Color.yellow, 30);
+    //     se.Button(p, b1, "EASY (10x10)", Cwolor.black, Color.yellow, 30);
     //     se.Button(p, b2, "Normal (15x15)", Color.black, Color.orange, 30);
     //     se.Button(p, b3, "Hard (20x20)", Color.black, Color.red, 30);
         

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MainMenu{
+class MainMenu{
     public static SwingEditor swing; // instance of SwingEditor to edit JComponents
     public static Settings setting; // instance of Settings to set/write get/read settings from settings.dat
     
@@ -54,14 +54,7 @@ public class MainMenu{
                 System.out.println("Selected button 1");
                 f.remove(p);
                 f.setVisible(false);
-                System.out.println("Entered playGame() with parameters "+10+", "+10+", "+15);
-                Minesweeper minesweeper = new Minesweeper();
-                f.repaint();
-                f.revalidate();
-                f.add(p);
-                f.setVisible(true);
-                f.repaint();
-                f.revalidate();
+                new Minesweeper(10, 10, 12);
             }
         });
         System.out.print("\033[1F\33[K");
@@ -71,8 +64,7 @@ public class MainMenu{
         b2.addMouseListener(new MouseAdapter(){
             public void mousePressed(MouseEvent e){ //Leaderboard BUTTON
                 System.out.println("Selected button 2");
-                f.setVisible(false);
-                f.setVisible(true);
+                f.remove(p);
             }
         });
         System.out.print("\033[1F\33[K");

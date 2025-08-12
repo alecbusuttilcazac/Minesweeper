@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
-public class Settings{
+class Settings{
     static int numBombs;
     static String bombChar;
     static String flagChar;

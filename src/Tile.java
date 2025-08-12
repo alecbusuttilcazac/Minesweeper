@@ -2,13 +2,13 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.plaf.metal.*;
 
-public abstract class Tile{
+abstract class Tile{
     JButton button = new JButton();
     
-    boolean isExplored = false;
-    boolean isFlagged = false;
-    boolean lightDark; // true for light colour, false for dark colour.
-    String exploredChar;
+    protected boolean isExplored = false;
+    protected boolean isFlagged = false;
+    protected boolean lightDark; // true for light colour, false for dark colour.
+    protected String exploredChar;
     
     // Constructor
     Tile(String exploredChar){
@@ -17,19 +17,19 @@ public abstract class Tile{
     }
     
     // Getters
-    JButton getButton()     { return button; }
-    boolean getExplored()   { return isExplored; }
-    boolean getLightDark()  { return lightDark; }
+    protected JButton getButton()     { return button; }
+    protected boolean getExplored()   { return isExplored; }
+    protected boolean getLightDark()  { return lightDark; }
     
     // Setters
-    void setExploredCharacter(String exploredChar)  { this.exploredChar = exploredChar; }
-    void setLightDark(boolean lightDark)            { this.lightDark = lightDark; }
-    void setButton(Color clr){
+    protected void setExploredCharacter(String exploredChar)  { this.exploredChar = exploredChar; }
+    protected void setLightDark(boolean lightDark)            { this.lightDark = lightDark; }
+    protected void setButton(Color clr){
         SwingEditor.Button(button, "", Color.black, clr, 20);
         button.setBorder(null);
     }
     
-    abstract void setExplored(Player p, Color c);
-    abstract void toggleFlagged(Player p, String flagChar);
-    abstract int getBombsAroundTile();
+    protected abstract void setExplored(Player p, Color c);
+    protected abstract void toggleFlagged(Player p, String flagChar);
+    protected abstract int getBombsAroundTile();
 }

@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SwingEditor{
+class SwingEditor{
     
     //JFrame
     public static void Frame(JFrame f, String frameTitle, int locationx, int locationy, int sizex, int sizey){

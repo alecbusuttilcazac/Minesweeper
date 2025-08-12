@@ -1,16 +1,16 @@
 import java.awt.*;
 import javax.swing.ImageIcon;
 
-public class BombTile extends Tile {    
-    BombTile(String exploredChar) {
+class BombTile extends Tile {    
+    protected BombTile(String exploredChar) {
         super(exploredChar);
     }
     
-    int getBombsAroundTile() {
-        return 9; // BombTile does not have any bombs around it, as it is a bomb itself
+    protected int getBombsAroundTile() {
+        return -1; // BombTile does not have any bombs around it, as it is a bomb itself
     }
     
-    void setExplored(Player player, Color colour) {
+    protected void setExplored(Player player, Color colour) {
         // tile can not be unexplored
         if (!isExplored) {
             button.setBackground(colour);
@@ -20,7 +20,7 @@ public class BombTile extends Tile {
         }
     }
     
-    void toggleFlagged(Player player, String flagChar) {
+    protected void toggleFlagged(Player player, String flagChar) {
         if (isFlagged) {
             isFlagged = false;
             player.adjustScore(-50);
