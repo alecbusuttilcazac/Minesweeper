@@ -81,7 +81,7 @@ class Minesweeper{
                                     System.out.println("Bomb clicked at ("+i2+", "+j2+")");
                                     gameFrame.dispose(); // Dispose the game window
                                     
-                                    JOptionPane.showMessageDialog(null, "You hit a bomb! Finalyer score: " +player.getScore()+ ".");
+                                    JOptionPane.showMessageDialog(null, "You hit a bomb! Final score: " +player.getScore()+ ".");
                                     SwingUtilities.invokeLater(() -> {
                                         Main.main(null); 
                                     });
@@ -103,7 +103,7 @@ class Minesweeper{
                                     if(deleteNumExplored) System.out.println(" >>>> number of explored tiles = " +numExplored[0]);
                                     
                                     if (x*y - numExplored[0] - numBombs == 0) {
-                                        JOptionPane.showMessageDialog(null, "You have successfully cleared the minefield! Player score: " +player.getScore()+ ".");
+                                        JOptionPane.showMessageDialog(null, "You have successfully cleared the minefield! Final score: " +player.getScore()+ ".");
                                         gameFrame.dispose(); // Dispose the game window
                                         SwingUtilities.invokeLater(() -> {
                                             Main.main(null); 
